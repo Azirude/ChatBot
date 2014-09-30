@@ -25,10 +25,12 @@ public class ChatboxAppController
 
 		String result = applicationView.showChatbot(" Taylor ");
 
-		if (mySillyChatbot.quitChecker(result))
+		while (!mySillyChatbot.quitChecker(result))
 		{
-			quit();
+			result = applicationView.showChatbot(result);
 		}
+
+			quit();
 	}
 
 	private void quit()

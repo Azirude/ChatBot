@@ -1,5 +1,12 @@
 package chatbot.model;
 
+
+/**
+ * The chatbot model class; used for checking and manipulating Strings.
+ * @author tpet7439
+ *@version 1.1 9/26/14
+ */
+
 public class Chatbot
 {
 
@@ -51,6 +58,12 @@ public class Chatbot
 	{
 		chatCount++;
 	}
+	
+	/**
+	 * QuitCheker boolean calls for the string, and allows for an input.
+	 * @param input is answer that will be called later on in the boolean statement.
+	 * @return returns an if else statement, with the input equaling "Goodbye".
+	 */
 
 	public boolean quitChecker(String input)
 	{
