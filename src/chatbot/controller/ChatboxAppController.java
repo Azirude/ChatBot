@@ -42,6 +42,7 @@ public class ChatboxAppController
 
 		while (!mySillyChatbot.quitChecker(result))
 		{
+			result = mySillyChatbot.processText(result);
 			result = applicationView.showChatbotDialog(result);
 		}
 		/**
