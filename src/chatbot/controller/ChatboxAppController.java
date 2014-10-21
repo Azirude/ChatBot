@@ -1,7 +1,5 @@
 package chatbot.controller;
 
-import javax.swing.JOptionPane;
-
 /**
  * Runs the chatbot Project.  Owns the model and associated views.
  * @author Taylor
@@ -10,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import chatbot.model.Chatbot;
 import chatbot.view.ChatBotView;
+import chatbot.view.ChatbotFrame;
 
 public class ChatboxAppController
 {
@@ -17,9 +16,11 @@ public class ChatboxAppController
 	private Chatbot mySillyChatbot;
 	private String startMessage;
 	private String quitMessage;
+	private ChatbotFrame appFrame;
 
 	public ChatboxAppController()
 	{
+		appFrame = new ChatbotFrame(this);
 		applicationView = new ChatBotView(this);
 		mySillyChatbot = new Chatbot("derf");
 		startMessage = "Welcome to the " + mySillyChatbot.getName() + "chatbot.  What is your name?";
@@ -40,15 +41,15 @@ public class ChatboxAppController
 
 		String result = applicationView.showChatbotDialog(startMessage);
 
-		while (!mySillyChatbot.quitChecker(result))
-		{
-			result = mySillyChatbot.processText(result);
-			result = applicationView.showChatbotDialog(result);
-		}
-		/**
-		 * Shows the answer and repeats unless
-		 */
-			quit();
+//		while (!mySillyChatbot.quitChecker(result))
+//		{
+//			result = mySillyChatbot.processText(result);
+//			result = applicationView.showChatbotDialog(result);
+//		}
+//		/**
+//		 * Shows the answer and repeats unless
+//		 */
+//			quit();
 	}
 
 	private void quit()

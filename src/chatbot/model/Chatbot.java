@@ -2,11 +2,11 @@ package chatbot.model;
 
 import java.util.ArrayList;
 
-
 /**
  * The chatbot model class; used for checking and manipulating Strings.
+ * 
  * @author tpet7439
- *@version 1.1 9/26/14
+ * @version 1.1 9/26/14
  */
 
 public class Chatbot
@@ -21,7 +21,7 @@ public class Chatbot
 	 * current number of chats to zero.
 	 * 
 	 * @param name
-	 * The supplied name for the Chatbot.
+	 *            The supplied name for the Chatbot.
 	 */
 
 	public Chatbot(String name)
@@ -31,29 +31,72 @@ public class Chatbot
 		chatCount = 0;
 		fillTheMemeList();
 	}
+
 	/**
-	 * processes input from the user against the checker methods.  returns the next output for the view.
-	 * @param currentInput the supplied text.
+	 * processes input from the user against the checker methods. returns the
+	 * next output for the view.
+	 * 
+	 * @param currentInput
+	 *            the supplied text.
 	 * @return the processed text based on checker or other methods.
 	 */
-	
+
 	public String processText(String currentInput)
 	{
 		String result = "";
-		
-		if(memeChecker(currentInput))
+
+		int randomPosition = (int) (Math.random() * 3);
+		if (currentInput != null)
 		{
-			result = " Wow , " + currentInput + " is a meme. Wahoo!";
+			if (randomPosition == 0)
+			{
+				if (stringLengthChecker(currentInput))
+				{
+					result = "too long";
+				}
+				else
+				{
+					memeList.add(currentInput);
+					result = "short words";
+				}
+			}
+			else if (randomPosition == 1)
+			{
+				if (contentChecker(currentInput))
+				{
+					result = "yup you know the secret";
+
+				}
+				else
+				{
+					result = "try again another time";
+				}
+
+			}
+			else
+			{
+				if (memeChecker(currentInput))
+				{
+					result = " Wow , " + currentInput + " is a meme. Wahoo!";
+				}
+				else
+				{
+					result = " not a meme, try again. ";
+				}
+			}
 		}
 		else
 		{
-			result = " not a meme, try again. ";
+			result = "You entered nothing in the text box, please retype your answer.";
 		}
-		
-		
 		return result;
 	}
-	
+
+	private boolean contentChecker(String currentInput)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	/**
 	 * Returns the name of the Chatbot object.
@@ -65,14 +108,26 @@ public class Chatbot
 	{
 		return name;
 	}
-	
+
+	private boolean stringLengthChecker(String input)
+	{
+		boolean isTooLong = false;
+		
+		if(input.length() >= 20)
+		{
+			isTooLong = true;
+		}
+		return isTooLong;
+
+	}
+
 	private void fillTheMemeList()
 	{
 		/**
-		 * List of Memes that will be recognized by Chatbot.
-		 * Adds them to a list.
+		 * List of Memes that will be recognized by Chatbot. Adds them to a
+		 * list.
 		 */
-		
+
 		memeList.add("Doge");
 		memeList.add("One does not simply");
 		memeList.add("Kitties");
@@ -100,33 +155,36 @@ public class Chatbot
 	{
 		chatCount++;
 	}
-	
+
 	private boolean memeChecker(String input)
 	{
 		boolean isAMeme = false;
-		
+
 		for (String currentMeme : memeList)
 		{
-			if(input.equalsIgnoreCase(currentMeme))
+			if (input.equalsIgnoreCase(currentMeme))
 			{
 				isAMeme = true;
 			}
 		}
-		
-		for(int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
+
+		for (int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
 		{
-			if(input.equalsIgnoreCase(memeList.get(loopCounter)))
+			if (input.equalsIgnoreCase(memeList.get(loopCounter)))
 			{
 				isAMeme = true;
 			}
 		}
-		
+
 		return isAMeme;
 	}
-	
+
 	/**
 	 * QuitCheker boolean calls for the string, and allows for an input.
-	 * @param input is answer that will be called later on in the boolean statement.
+	 * 
+	 * @param input
+	 *            is answer that will be called later on in the boolean
+	 *            statement.
 	 * @return returns an if else statement, with the input equaling "Goodbye".
 	 */
 
@@ -134,7 +192,7 @@ public class Chatbot
 	{
 		boolean okToQuit = false;
 
-		if (input!= null && input.equals("Goodbye"))
+		if (input != null && input.equals("Goodbye"))
 		{
 			okToQuit = true;
 		}
