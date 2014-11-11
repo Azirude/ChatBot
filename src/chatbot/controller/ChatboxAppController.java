@@ -9,6 +9,7 @@ package chatbot.controller;
 import chatbot.model.Chatbot;
 import chatbot.view.ChatBotView;
 import chatbot.view.ChatbotFrame;
+import chatbot.view.ChatbotPanel;
 
 public class ChatboxAppController
 {
@@ -26,7 +27,7 @@ public class ChatboxAppController
 		startMessage = "Welcome to the " + mySillyChatbot.getName() + "chatbot.  What is your name?";
 		quitMessage = "Thank you for Chosing " + mySillyChatbot.getName();
 	}
-	
+
 	public Chatbot getMySillyChatbot()
 	{
 		return mySillyChatbot;
@@ -39,18 +40,33 @@ public class ChatboxAppController
 		 * Calls the Chatbot textbox.
 		 */
 
-		String result = applicationView.showChatbotDialog(startMessage);
+		((ChatbotPanel) appFrame.getContentPane()).showTextMessage(startMessage);
 
-//		while (!mySillyChatbot.quitChecker(result))
-//		{
-//			result = mySillyChatbot.processText(result);
-//			result = applicationView.showChatbotDialog(result);
-//		}
-//		/**
-//		 * Shows the answer and repeats unless
-//		 */
-//			quit();
+		// ChatbotPanel testPanel = (ChatbotPanel) appFrame.getContentPane();
+		// testPanel.showTextMessage(startMessage);
+
+		/**
+		 * Shows the answer and repeats unless
+		 */
 	}
+
+	public String getChatbotDialog(String input)
+	{
+		String result = "";
+		
+		if(mySillyChatbot.quitChecker(input))
+		{
+			quit();
+		}
+		
+		result = mySillyChatbot.processText(input);
+
+		return result;
+	}
+
+	/**
+	 * Quit method for the chatbot application.
+	 */
 
 	private void quit()
 	{

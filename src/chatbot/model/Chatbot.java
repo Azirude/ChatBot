@@ -14,6 +14,19 @@ public class Chatbot
 	private ArrayList<String> memeList;
 	private String name;
 	private int chatCount;
+	private ArrayList<String> userInputList;
+	public ChatbotUser getMyUser()
+
+	
+	{
+		return myUser;
+	}
+
+	public void setMyUser(ChatbotUser myUser)
+	{
+		this.myUser = myUser;
+	}
+
 	private int length;
 
 	/**
@@ -30,6 +43,8 @@ public class Chatbot
 		this.name = name;
 		chatCount = 0;
 		fillTheMemeList();
+		myUser = new ChatbotUser();
+		userInputList = new ArrayList<String>();
 	}
 
 	/**
@@ -44,8 +59,17 @@ public class Chatbot
 	public String processText(String currentInput)
 	{
 		String result = "";
+		
+		if(getChatCount() < 7)
+		{
+			
+		}
+		
 
 		int randomPosition = (int) (Math.random() * 3);
+		
+		
+		
 		if (currentInput != null)
 		{
 			if (randomPosition == 0)
@@ -73,7 +97,7 @@ public class Chatbot
 				}
 
 			}
-			else
+			else if(randomPosition ==2)
 			{
 				if (memeChecker(currentInput))
 				{
@@ -85,11 +109,50 @@ public class Chatbot
 				}
 			}
 		}
+		else if(randomPosition ==3)
+		{
+		
+		}
+		else if(randomPosition ==4)
+		{
+			userInputList.add(currentInput);
+			result = "Thank you for the comment.";
+		}
 		else
 		{
-			result = "You entered nothing in the text box, please retype your answer.";
+			if(userInputChecker(currentInput))
+			{
+				
+			}
+			else
+			{
+				
+			}
 		}
+		updateChatCount();
 		return result;
+	}
+	
+	private boolean userInputChecker(String currentInput)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean userInputCheker(String userInput)
+	{
+		boolean matchesInput = false;
+		
+		for(int loopCount = 0; loopCount < userInputList.size(); loopCount++)
+		{
+			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			{
+				matchesInput = true;
+				userInputList.remove(loopCount);
+				loopCount--;
+			}
+		}
+		return matchesInput;
 	}
 
 	private boolean contentChecker(String currentInput)
@@ -178,6 +241,8 @@ public class Chatbot
 
 		return isAMeme;
 	}
+	
+	private ChatbotUser myUser;
 
 	/**
 	 * QuitCheker boolean calls for the string, and allows for an input.
