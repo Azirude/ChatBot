@@ -51,7 +51,9 @@ public class ChatbotPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.EAST, firstButton, -150, SpringLayout.EAST, this);
 		baseLayout.putConstraint(SpringLayout.NORTH, chatPane, 20, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.WEST, chatPane, 20, SpringLayout.WEST, this);
-
+/**
+ * Gives the directions of where the pane will be locked.
+ */
 		setupPanel();
 		setupLayout();
 		setupListeners();

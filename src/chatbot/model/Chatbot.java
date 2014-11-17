@@ -15,9 +15,9 @@ public class Chatbot
 	private String name;
 	private int chatCount;
 	private ArrayList<String> userInputList;
+
 	public ChatbotUser getMyUser()
 
-	
 	{
 		return myUser;
 	}
@@ -59,17 +59,25 @@ public class Chatbot
 	public String processText(String currentInput)
 	{
 		String result = "";
-		
-		if(getChatCount() < 7)
+
+		if (getChatCount() < 7)
 		{
-			
+			if (getChatCount() == 0)
+			{
+				myUser.setUserName(currentInput);
+				result = "Nice choice!" + myUser.getUserName() + " Do you live with your parents? ";
+			}
+			else if (getChatCount() == 1)
+			{
+				int userAge = Integer.parseInt(currentInput);
+				myUser.setAge(userAge);
+				
+			}
+
 		}
-		
 
 		int randomPosition = (int) (Math.random() * 3);
-		
-		
-		
+
 		if (currentInput != null)
 		{
 			if (randomPosition == 0)
@@ -97,7 +105,7 @@ public class Chatbot
 				}
 
 			}
-			else if(randomPosition ==2)
+			else if (randomPosition == 2)
 			{
 				if (memeChecker(currentInput))
 				{
@@ -109,30 +117,30 @@ public class Chatbot
 				}
 			}
 		}
-		else if(randomPosition ==3)
+		else if (randomPosition == 3)
 		{
-		
+
 		}
-		else if(randomPosition ==4)
+		else if (randomPosition == 4)
 		{
 			userInputList.add(currentInput);
 			result = "Thank you for the comment.";
 		}
 		else
 		{
-			if(userInputChecker(currentInput))
+			if (userInputChecker(currentInput))
 			{
-				
+
 			}
 			else
 			{
-				
+
 			}
 		}
 		updateChatCount();
 		return result;
 	}
-	
+
 	private boolean userInputChecker(String currentInput)
 	{
 		// TODO Auto-generated method stub
@@ -142,10 +150,10 @@ public class Chatbot
 	private boolean userInputCheker(String userInput)
 	{
 		boolean matchesInput = false;
-		
-		for(int loopCount = 0; loopCount < userInputList.size(); loopCount++)
+
+		for (int loopCount = 0; loopCount < userInputList.size(); loopCount++)
 		{
-			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			if (userInput.equalsIgnoreCase(userInputList.get(loopCount)))
 			{
 				matchesInput = true;
 				userInputList.remove(loopCount);
@@ -175,8 +183,8 @@ public class Chatbot
 	private boolean stringLengthChecker(String input)
 	{
 		boolean isTooLong = false;
-		
-		if(input.length() >= 20)
+
+		if (input.length() >= 20)
 		{
 			isTooLong = true;
 		}
@@ -241,7 +249,7 @@ public class Chatbot
 
 		return isAMeme;
 	}
-	
+
 	private ChatbotUser myUser;
 
 	/**
