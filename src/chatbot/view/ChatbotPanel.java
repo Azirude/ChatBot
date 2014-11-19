@@ -42,6 +42,7 @@ public class ChatbotPanel extends JPanel
 				firstTextField.setText("");
 				firstTextField.setText(firstTextField.getText());
 				chatArea.setText(firstTextField.getText());
+				firstTextField.requestFocus();
 			}
 		});
 

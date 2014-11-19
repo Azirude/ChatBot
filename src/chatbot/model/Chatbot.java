@@ -15,19 +15,9 @@ public class Chatbot
 	private String name;
 	private int chatCount;
 	private ArrayList<String> userInputList;
-
-	public ChatbotUser getMyUser()
-
-	{
-		return myUser;
-	}
-
-	public void setMyUser(ChatbotUser myUser)
-	{
-		this.myUser = myUser;
-	}
-
 	private int length;
+	private ChatbotUser myUser;
+	private String contentArea;
 
 	/**
 	 * creates a Chatbot object with the supplied name and initializes the
@@ -40,46 +30,101 @@ public class Chatbot
 	public Chatbot(String name)
 	{
 		memeList = new ArrayList<String>();
-		this.name = name;
-		chatCount = 0;
-		fillTheMemeList();
-		myUser = new ChatbotUser();
 		userInputList = new ArrayList<String>();
+		this.name = name;
+		contentArea = "";
+		chatCount = 0;
+		myUser = new ChatbotUser();
+		fillTheMemeList();
+	
 	}
 
 	/**
-	 * processes input from the user against the checker methods. returns the
+	 * Returns the name of the Chatbot object.
+	 * 
+	 * @return The current name of the Chatbot.
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * This returns the current number of chats.
+	 * 
+	 * @return The current chatCount value.
+	 */
+	public int getChatCount()
+	{
+		return chatCount;
+	}
+
+	public ChatbotUser getMyUser()
+	{
+		return myUser;
+	}
+
+	public void setMyUser(ChatbotUser myUser)
+	{
+		this.myUser = myUser;
+	}
+
+	/**
+	 * Sets the name of the Chatbot to the supplied name.
+	 * 
+	 * @param name
+	 *            The new name for the chatbot.
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	/**
+	 * Helper method to fill the list of memes.
+	 */
+	private void fillTheMemeList()
+	{
+		memeList.add("kitties");
+		memeList.add("one does not simply");
+		memeList.add("doge");
+		memeList.add("doh!");
+		memeList.add("toddler fist");
+		memeList.add("y u no");
+	}
+
+	/**
+	 * Processes input from the user against the checker methods. Returns the
 	 * next output for the view.
 	 * 
 	 * @param currentInput
-	 *            the supplied text.
-	 * @return the processed text based on checker or other methods.
+	 *            The supplied text.
+	 * @return The processed text based on checker or other methods.
 	 */
-
 	public String processText(String currentInput)
 	{
 		String result = "";
 
-		if (getChatCount() < 7)
+		if (getChatCount() < 5)
 		{
+			// Ask questions about all data members here
+			// you will need ifs or a switch
+			// assign via myUser.set...
 			if (getChatCount() == 0)
 			{
 				myUser.setUserName(currentInput);
-				result = "Nice choice!" + myUser.getUserName() + " Do you live with your parents? ";
+				result = "Good name " + myUser.getUserName() + " how old are you?";
 			}
 			else if (getChatCount() == 1)
 			{
 				int userAge = Integer.parseInt(currentInput);
 				myUser.setAge(userAge);
-				
 			}
-
+			// continue for other user info fields
 		}
-
-		int randomPosition = (int) (Math.random() * 3);
-
-		if (currentInput != null)
+		else if (currentInput != null && currentInput.length() > 0)
 		{
+			int randomPosition = (int) (Math.random() * 6);
 			if (randomPosition == 0)
 			{
 				if (stringLengthChecker(currentInput))
@@ -88,7 +133,6 @@ public class Chatbot
 				}
 				else
 				{
-					memeList.add(currentInput);
 					result = "short words";
 				}
 			}
@@ -97,57 +141,55 @@ public class Chatbot
 				if (contentChecker(currentInput))
 				{
 					result = "yup you know the secret";
-
 				}
 				else
 				{
 					result = "try again another time";
 				}
-
 			}
 			else if (randomPosition == 2)
 			{
 				if (memeChecker(currentInput))
 				{
-					result = " Wow , " + currentInput + " is a meme. Wahoo!";
+					result = "Wow, " + currentInput + " is a meme. Wahoo!";
 				}
 				else
 				{
-					result = " not a meme, try again. ";
+					result = "not a meme, try again";
+
 				}
 			}
-		}
-		else if (randomPosition == 3)
-		{
-
-		}
-		else if (randomPosition == 4)
-		{
-			userInputList.add(currentInput);
-			result = "Thank you for the comment.";
-		}
-		else
-		{
-			if (userInputChecker(currentInput))
+			else if (randomPosition == 3)
 			{
-
+				// Talk about the user here :D
+			}
+			else if (randomPosition == 4)
+			{
+				// add to our list
+				userInputList.add(currentInput);
+				result = "Thank you for the comment";
 			}
 			else
 			{
+				if (userInputChecker(currentInput))
+				{
 
+				}
+				else
+				{
+
+				}
 			}
+		}
+		else
+		{
+			result = "use words!!!!";
 		}
 		updateChatCount();
 		return result;
 	}
 
-	private boolean userInputChecker(String currentInput)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean userInputCheker(String userInput)
+	private boolean userInputChecker(String userInput)
 	{
 		boolean matchesInput = false;
 
@@ -160,26 +202,23 @@ public class Chatbot
 				loopCount--;
 			}
 		}
+
 		return matchesInput;
 	}
 
-	private boolean contentChecker(String currentInput)
+	/**
+	 * Private helper method to update the chatCount variable.
+	 */
+	private void updateChatCount()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		chatCount++;
 	}
 
 	/**
-	 * Returns the name of the Chatbot object.
 	 * 
-	 * @return the current name of the Chatbot.
+	 * @param input
+	 * @return
 	 */
-
-	public String getName()
-	{
-		return name;
-	}
-
 	private boolean stringLengthChecker(String input)
 	{
 		boolean isTooLong = false;
@@ -188,45 +227,38 @@ public class Chatbot
 		{
 			isTooLong = true;
 		}
+
 		return isTooLong;
-
 	}
 
-	private void fillTheMemeList()
+	/**
+	 * Method checks if the user text contains the Chatbot's special content
+	 * area text.
+	 * 
+	 * @param input
+	 *            The user supplied text.
+	 * @return Whether the user supplied text contains the content area supplied
+	 *         by the user.
+	 */
+	private boolean contentChecker(String input)
 	{
-		/**
-		 * List of Memes that will be recognized by Chatbot. Adds them to a
-		 * list.
-		 */
+		boolean hasMyContent = false;
 
-		memeList.add("Doge");
-		memeList.add("One does not simply");
-		memeList.add("Kitties");
-		memeList.add("Ceiling Cat");
-		memeList.add("None of my business");
-		memeList.add("Y u no");
+		if (input.contains(contentArea))
+		{
+			hasMyContent = true;
+		}
+
+		return hasMyContent;
 	}
 
-	public int getLength()
-	{
-		return length;
-	}
-
-	public int getChatCount()
-	{
-		return chatCount;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	private void updateChatCount()
-	{
-		chatCount++;
-	}
-
+	/**
+	 * Checks if the supplied text matches the list of memes.
+	 * 
+	 * @param input
+	 *            The user supplied text to check.
+	 * @return Whether or not a meme has been supplied by the user.
+	 */
 	private boolean memeChecker(String input)
 	{
 		boolean isAMeme = false;
@@ -239,33 +271,21 @@ public class Chatbot
 			}
 		}
 
-		for (int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
-		{
-			if (input.equalsIgnoreCase(memeList.get(loopCounter)))
-			{
-				isAMeme = true;
-			}
-		}
-
 		return isAMeme;
 	}
 
-	private ChatbotUser myUser;
-
 	/**
-	 * QuitCheker boolean calls for the string, and allows for an input.
+	 * Method to check for the appropriate exit message from the user.
 	 * 
 	 * @param input
-	 *            is answer that will be called later on in the boolean
-	 *            statement.
-	 * @return returns an if else statement, with the input equaling "Goodbye".
+	 *            The user supplied text.
+	 * @return Whether or not the quit message has been supplied.
 	 */
-
 	public boolean quitChecker(String input)
 	{
 		boolean okToQuit = false;
 
-		if (input != null && input.equals("Goodbye"))
+		if (input != null && input.equals("sayonara"))
 		{
 			okToQuit = true;
 		}
