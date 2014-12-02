@@ -3,7 +3,7 @@ package chatbot.controller;
 /**
  * Runs the chatbot Project.  Owns the model and associated views.
  * @author Taylor
- * @version 1.2 10/2/14 - cleaned the quit method.
+ * @version 1.9 11/21/14 - cleaned the quit method.
  */
 
 import chatbot.model.Chatbot;
@@ -21,33 +21,33 @@ public class ChatboxAppController
 
 	public ChatboxAppController()
 	{
-		appFrame = new ChatbotFrame(this);
 		applicationView = new ChatBotView(this);
-		mySillyChatbot = new Chatbot("derf");
-		startMessage = "Welcome to the " + mySillyChatbot.getName() + "chatbot.  What is your name?";
-		quitMessage = "Thank you for Chosing " + mySillyChatbot.getName();
+		appFrame = new ChatbotFrame(this);
+		mySillyChatbot = new Chatbot("Derf");
+		startMessage = "Welcome to the " + mySillyChatbot.getName() + " ChatBot. What is your name?";
+		quitMessage = "Cyalater nerd!";
 	}
 
+	/**
+	 * Getter method for the applications Chatbot.
+	 * 
+	 * @return The Chatbot for the application.
+	 */
 	public Chatbot getMySillyChatbot()
 	{
 		return mySillyChatbot;
 	}
 
+	/**
+	 * Startup method for the Chatbot application. This is the standard method
+	 * we use in all of our projects.
+	 */
 	public void start()
 	{
-
-		/**
-		 * Calls the Chatbot textbox.
-		 */
-
 		((ChatbotPanel) appFrame.getContentPane()).showTextMessage(startMessage);
 
 		// ChatbotPanel testPanel = (ChatbotPanel) appFrame.getContentPane();
 		// testPanel.showTextMessage(startMessage);
-
-		/**
-		 * Shows the answer and repeats unless
-		 */
 	}
 
 	public String getChatbotDialog(String input)
@@ -60,17 +60,17 @@ public class ChatboxAppController
 		}
 		
 		result = mySillyChatbot.processText(input);
-
+		
 		return result;
 	}
 
 	/**
-	 * Quit method for the chatbot application.
+	 * Quit method for the Chatbot application.
 	 */
-
 	private void quit()
 	{
 		applicationView.showChatbotMessage(quitMessage);
 		System.exit(0);
 	}
+	
 }

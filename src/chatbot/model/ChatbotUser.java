@@ -69,9 +69,13 @@ public class ChatbotUser
 	}
 
 
-	public void setWeight(double userWeight)
+	public void setWeight(double Weight)
 	{
 		this.weight = weight;	
 	}
 	
+	public double getWeight()
+	{
+		return weight;
+	}
 }

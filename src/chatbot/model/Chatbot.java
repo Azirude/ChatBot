@@ -15,7 +15,6 @@ public class Chatbot
 	private String name;
 	private int chatCount;
 	private ArrayList<String> userInputList;
-	private int length;
 	private ChatbotUser myUser;
 	private String contentArea;
 
@@ -36,7 +35,7 @@ public class Chatbot
 		chatCount = 0;
 		myUser = new ChatbotUser();
 		fillTheMemeList();
-	
+
 	}
 
 	/**
@@ -88,8 +87,8 @@ public class Chatbot
 		memeList.add("kitties");
 		memeList.add("one does not simply");
 		memeList.add("doge");
-		memeList.add("doh!");
-		memeList.add("toddler fist");
+		memeList.add("Scumbag Steve");
+		memeList.add("Ceiling Cat");
 		memeList.add("y u no");
 	}
 
@@ -107,86 +106,211 @@ public class Chatbot
 
 		if (getChatCount() < 5)
 		{
-			// Ask questions about all data members here
-			// you will need ifs or a switch
-			// assign via myUser.set...
-			if (getChatCount() == 0)
-			{
-				myUser.setUserName(currentInput);
-				result = "Good name " + myUser.getUserName() + " how old are you?";
-			}
-			else if (getChatCount() == 1)
-			{
-				int userAge = Integer.parseInt(currentInput);
-				myUser.setAge(userAge);
-			}
-			// continue for other user info fields
+			result = introduceUser(currentInput);
 		}
 		else if (currentInput != null && currentInput.length() > 0)
 		{
-			int randomPosition = (int) (Math.random() * 6);
-			if (randomPosition == 0)
-			{
-				if (stringLengthChecker(currentInput))
-				{
-					result = "too long";
-				}
-				else
-				{
-					result = "short words";
-				}
-			}
-			else if (randomPosition == 1)
-			{
-				if (contentChecker(currentInput))
-				{
-					result = "yup you know the secret";
-				}
-				else
-				{
-					result = "try again another time";
-				}
-			}
-			else if (randomPosition == 2)
-			{
-				if (memeChecker(currentInput))
-				{
-					result = "Wow, " + currentInput + " is a meme. Wahoo!";
-				}
-				else
-				{
-					result = "not a meme, try again";
-
-				}
-			}
-			else if (randomPosition == 3)
-			{
-				// Talk about the user here :D
-			}
-			else if (randomPosition == 4)
-			{
-				// add to our list
-				userInputList.add(currentInput);
-				result = "Thank you for the comment";
-			}
-			else
-			{
-				if (userInputChecker(currentInput))
-				{
-
-				}
-				else
-				{
-
-				}
-			}
+			result = randomChatConversation(currentInput);
 		}
 		else
 		{
 			result = "use words!!!!";
+			chatCount--;
 		}
 		updateChatCount();
 		return result;
+	}
+
+	/**
+	 * Introduces the user of the Chatbot and gathers information about them to
+	 * be used later in the project.
+	 * 
+	 * @param input
+	 *            The supplied answers to user information questions.
+	 * @return The next question for the user of the Chatbot.
+	 */
+	private String introduceUser(String input)
+	{
+		String userQuestion = "";
+
+		if (getChatCount() == 0)
+		{
+			myUser.setUserName(input);
+			userQuestion = "Good name " + myUser.getUserName() + " how old are you?";
+		}
+		else if (getChatCount() == 1)
+		{
+			int userAge = Integer.parseInt(input);
+			myUser.setAge(userAge);
+			userQuestion = "You're old." + myUser.getUserName() + " How much do you weigh?";
+		}
+		else if (getChatCount() == 2)
+		{
+			double userWeight = Double.parseDouble(input);
+			myUser.setWeight(userWeight);
+			userQuestion = "Yikes that is a lot less than a dwarf star " + myUser.getUserName() + " do you have tattoos?";
+		}
+		else if (getChatCount() == 3)
+		{
+			boolean userTatts = Boolean.parseBoolean(input);
+			myUser.setHasTattoos(userTatts);
+			userQuestion = "Some comment about tattoos" + myUser.getUserName() + " do you have friends?";
+		}
+		else
+		{
+			boolean userLenses = Boolean.parseBoolean(input);
+			myUser.setNeedsCorrectiveLenses(userLenses);
+			userQuestion = "I don't wear glasses. " + myUser.getUserName() + " What do you want to talk about?";
+		}
+
+		return userQuestion;
+	}
+
+	/**
+	 * Selects a random topic for the chatbot to talk about using the user's
+	 * input as a comment or reference in the topic.
+	 * 
+	 * @param input
+	 *            The user supplied input.
+	 * @return The next Chatbot conversation.
+	 */
+	private String randomChatConversation(String input)
+	{
+		String conversation = "";
+
+		int randomPosition = (int) (Math.random() * 6);
+		if (randomPosition == 0)
+		{
+			if (stringLengthChecker(input))
+			{
+				conversation = "too long";
+			}
+			else
+			{
+				conversation = "short words";
+			}
+		}
+		else if (randomPosition == 1)
+		{
+			if (contentChecker(input))
+			{
+				conversation = "yup you know the secret";
+			}
+			else
+			{
+				conversation = "try again another time";
+			}
+		}
+		else if (randomPosition == 2)
+		{
+			if (memeChecker(input))
+			{
+				conversation = "Wow, " + input + " is a meme. Wahoo!";
+			}
+			else
+			{
+				conversation = "not a meme, try again";
+			}
+		}
+		else if (randomPosition == 3)
+		{
+			conversation = userTopic(input);
+		}
+		else if (randomPosition == 4)
+		{
+			// add to our list
+			userInputList.add(input);
+			conversation = "Thank you for the comment";
+		}
+		else if (randomPosition == 5)
+		{
+			if (mashChecker(input))
+			{
+				conversation = mashingDetected(input);
+			}
+			else
+			{
+				conversation = noMashingDetected(input);
+			}
+
+			if (userInputChecker(input))
+			{
+				conversation = "That was nice - you removed it from the list";
+			}
+			else
+			{
+				conversation = "that wasn't in the conversation before";
+			}
+		}
+
+		return conversation;
+	}
+
+	private String mashingDetected(String input)
+	{
+		String mashed = "";
+
+		mashed = input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+
+		return mashed;
+	}
+
+	private String noMashingDetected(String input)
+
+	{
+		String noMashing = "thank you for not being a total knob.";
+		if (input.length() > 1)
+		{
+
+			noMashing += input.substring(input.length() / 3, input.length() / 2);
+
+		}
+		return noMashing;
+	}
+
+	private boolean mashChecker(String userInput)
+	{
+		boolean isMashing = false;
+
+		if (userInput.indexOf("dgkhdfhg") > -1)
+		{
+			isMashing = true;
+		}
+
+		return isMashing;
+	}
+
+	/**
+	 * checker for keyboard mashing.
+	 * 
+	 * @param userInput
+	 *            The user supplied text.
+	 * @return whether mashing has been detected.
+	 */
+	private String userTopic(String userInput)
+	{
+		String userBasedResponse = "";
+
+		int randomUserTopic = (int) (Math.random() * 6);
+
+		switch (randomUserTopic)
+		{
+		case 1:
+			userBasedResponse = myUser.isHasTattoos() + " uwotm8";
+			break;
+		case 0:
+			userBasedResponse = myUser.getUserName() + " is a great name.";
+			break;
+		default:
+			userBasedResponse = myUser.getAge() + " you're ancient.";
+			break;
+		}
+
+		return userBasedResponse;
 	}
 
 	private boolean userInputChecker(String userInput)

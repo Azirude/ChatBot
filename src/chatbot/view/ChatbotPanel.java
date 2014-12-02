@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -94,7 +93,18 @@ public class ChatbotPanel extends JPanel
 
 	private void setupListeners()
 	{
-
+		firstButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String currentInput = firstTextField.getText();
+				String result = baseController.getChatbotDialog(currentInput);
+				showTextMessage(currentInput);
+				showTextMessage(result);
+				firstTextField.setText("");
+				firstTextField.requestFocus();
+			}
+		});
 	}
 
 	public void showTextMessage(String userInput)
